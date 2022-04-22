@@ -1,0 +1,61 @@
+server:
+  port: 8080
+spring:
+  application:
+    name: consumer
+
+eureka:
+  client:
+    service-url:
+      #配置eureka注册地址
+      defaultZone: http://127.0.0.1:8761/eureka,http://127.0.0.1:8762/eureka
+
+#feign的hystrix配置
+feign:
+#  client:
+#    config:
+#      default:
+#        connectTimeout: 5000 # 连接超时时间
+#        readTimeout: 5000   # 读超时时间
+  hystrix:
+    enabled: true
+
+ribbon:
+  ConnectionTimeout: 500
+  ReadTimeout: 3000
+hystrix:
+  command:
+    #全局超时时长
+    default:
+        execution:
+          isolation:
+            thread:
+              timeoutInMilliseconds: 6000
+#    hystrix.command.xxx#yyy(zzz).execution.isolation.thread.timeoutInMilliseconds=mmm
+#    xxx:要设置的某个FeignClient的类名
+#    yyy：方法名
+#    zzz：参数，如果是基础类型，就直接填基础类型：String/int；如果是某个对象，就直接填对象的类名
+#    mmm：要设置的超时时间（毫秒）
+    #Feign单个方法超时时长
+    UserClient#queryById(Long): #commandKey
+      execution:
+        isolation:
+          thread:
+            timeoutInMilliseconds: 1000
+      circuitBreaker:
+        requestVolumeThreshold: 10
+        sleepWindowInMilliseconds: 10000
+        errorThresholdPercentage: 2
+
+    #注解单个方法超时时长,
+    zhangsan: #commandKey 通过注解指定
+      execution:
+        isolation:
+          thread:
+            timeoutInMilliseconds: 1000
+    #单个服务超时时长（未测试）
+    user-service:
+      execution:
+        isolation:
+          thread:
+            timeoutInMilliseconds: 1000
