@@ -17,3 +17,10 @@ eureka:
     service-url:
       #配置eureka注册地址
       defaultZone: http://127.0.0.1:8761/eureka,http://127.0.0.1:8762/eureka
+     
+my:
+  config:
+    server:
+      name: zhangsan
+      age: 18
+      env: test
