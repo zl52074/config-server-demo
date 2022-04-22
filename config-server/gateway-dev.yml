@@ -1,0 +1,63 @@
+server:
+  port: 10010
+
+spring:
+  application:
+    name: zuul-gateway
+
+eureka:
+  client:
+    service-url:
+      #配置eureka注册地址
+      defaultZone: http://127.0.0.1:8761/eureka,http://127.0.0.1:8762/eureka
+
+#    方式一：直接绑定url，面向url的路由
+#zuul:
+#  routes:
+#    my-user-service1: #路由id，可随意写
+#      path: /user-service/**
+#      url: http://127.0.0.1:8081
+
+#    方式二：从注册中心拉取服务地址，面向服务的路由
+zuul:
+  routes:
+    user-service: #路由id，可随意写
+      path: /user/**
+      serviceId: user-service #提供服务名称，根据服务名称自动负载均衡（ribbon）拉取地址
+      strip-prefix: false #去除路由前缀，默认未true（改为false则可将路由前缀当成服务路径）缩进不同可将此配置生效范围设置为全局
+#    简化写法, 服务id:路由映射地址(如果服务id等于映射路径，可完全省略配置，zuul默认已有此配置)
+#zuul:
+#  routes:
+#    user-service: /user-service/**
+#  #忽略默认配置的service，将默认配置手写配置，则会生效
+#  ignored-services:
+#    - consumer-service
+#    - user-service
+
+
+
+hystrix:
+  command:
+    #全局超时时长
+    default:
+      execution:
+        isolation:
+          thread:
+            timeoutInMilliseconds: 6000
+
+    #单个服务超时时长
+    user-service:
+      execution:
+        isolation:
+          thread:
+            timeoutInMilliseconds: 3000
+#  默认配置AbstractRibbonCommand.getRibbonTimeout()
+#  ReadTimeout  通信超时时间(ms)
+#  ConnectTimeout  连接超时时间(ms)
+#  OkToRetryOnAllOperations  是否对所有操作重试
+#  MaxAutoRetries  同一实例的重试次数
+#  MaxAutoRetriesNextServer  同一服务不同实例的重试次数
+#  ribbonTimeout = (ribbonReadTimeout + ribbonConnectTimeout) * (maxAutoRetries + 1) * (maxAutoRetriesNextServer + 1)
+ribbon:
+  ConnectionTimeout: 500
+  ReadTimeout: 3000

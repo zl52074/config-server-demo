@@ -1,0 +1,19 @@
+server:
+  port: 8081
+
+spring:
+  application:
+    name: user-service
+  datasource:
+    url: jdbc:mysql://localhost:3306/springcloud_demo
+    username: root
+    password: root
+
+mybatis:
+  type-aliases-package: com.zl52074.user.pojo
+
+eureka:
+  client:
+    service-url:
+      #配置eureka注册地址
+      defaultZone: http://127.0.0.1:8761/eureka,http://127.0.0.1:8762/eureka

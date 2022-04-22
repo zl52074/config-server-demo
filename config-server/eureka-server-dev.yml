@@ -1,0 +1,16 @@
+server:
+  port: 8761
+
+#spring.application.name 更改应用名称
+spring:
+  application:
+    name: eureka-server
+
+eureka:
+  client:
+    #启动时是否注册自己
+    register-with-eureka: false
+    service-url:
+      #配置eureka注册地址，默认defaultZone为http://localhost:8761/eureka/，此处未改端口号可不写此配置
+      defaultZone: http://127.0.0.1:8761/eureka
+
