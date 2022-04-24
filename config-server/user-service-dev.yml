@@ -17,6 +17,12 @@ eureka:
     service-url:
       #配置eureka注册地址
       defaultZone: http://127.0.0.1:8761/eureka,http://127.0.0.1:8762/eureka
+      
+rabbitmq:
+    host: 127.0.0.1
+    port: 5672
+    username: admin
+    password: admin
      
 my:
   config:
