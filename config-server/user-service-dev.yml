@@ -27,6 +27,6 @@ rabbitmq:
 my:
   config:
     server:
-      name: zhangsan1
+      name: zhangsan155
       age: 18
       env: test
