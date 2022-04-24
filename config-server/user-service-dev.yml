@@ -21,6 +21,6 @@ eureka:
 my:
   config:
     server:
-      name: zhangsan
+      name: zhangsan123
       age: 18
       env: test
